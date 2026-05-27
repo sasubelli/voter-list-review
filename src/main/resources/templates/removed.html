@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Removed List Matches</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="shell">
+    <section class="panel">
+        <div class="title-row">
+            <h1>Possible Removed-List Matches</h1>
+            <a th:href="@{/analysis/{jobId}(jobId=${result.jobId})}">Back to summary</a>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Label</th>
+                <th>Score</th>
+                <th>Reason</th>
+                <th>Voter record</th>
+                <th>Removed-list record</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="match : ${result.removedMatches}">
+                <td th:text="${match.label}"></td>
+                <td th:text="${#numbers.formatDecimal(match.score, 1, 2)}"></td>
+                <td th:text="${match.reason}"></td>
+                <td th:text="${match.primaryRecord.name + ' (' + match.primaryRecord.voterId + ')'}"></td>
+                <td th:text="${match.removedRecord.name + ' (' + match.removedRecord.voterId + ')'}"></td>
+            </tr>
+            <tr th:if="${result.removedMatches.isEmpty()}">
+                <td colspan="5">No removed-list matches were flagged for this upload.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
